@@ -2,12 +2,12 @@
    Env Des Lab — Global Styles
    Palette: Fathom
    #1A1A1A · #0F3534 · #2E6E6E · #0D9488 · #8AABAB
-   Fonts:  Helvetica / Arial (primary)
+   Fonts:  Inter (primary)
            Space Mono (data/captions)
            JetBrains Mono (logo "lab" only)
    ======================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
 /* --- Tokens --- */
 :root {
@@ -23,7 +23,7 @@
   --text-muted: #457272;
   --border: #D4DDD8;
 
-  --font-primary: Helvetica, Arial, system-ui, sans-serif;
+  --font-primary: 'Inter', system-ui, sans-serif;
   --font-mono: 'Space Mono', monospace;
   --font-logo-lab: 'JetBrains Mono', monospace;
 
