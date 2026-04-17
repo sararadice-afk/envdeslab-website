@@ -2,12 +2,12 @@
    Env Des Lab — Global Styles
    Palette: Fathom
    #1A1A1A · #0F3534 · #2E6E6E · #0D9488 · #8AABAB
-   Fonts:  Inter (primary)
-           Space Mono (data/captions)
+   Fonts:  Inter (body)
+           Instrument Serif (headings)
            JetBrains Mono (logo "lab" only)
    ======================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
 /* --- Tokens --- */
 :root {
@@ -24,7 +24,8 @@
   --border: #D4DDD8;
 
   --font-primary: 'Inter', system-ui, sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --font-heading: 'Instrument Serif', Georgia, serif;
+  --font-secondary: 'Inter', system-ui, sans-serif;
   --font-logo-lab: 'JetBrains Mono', monospace;
 
   --max-w: 1440px;
@@ -75,8 +76,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .nav-links { display: flex; gap: 32px; }
 .nav-links a {
-  font-family: var(--font-mono);
+  font-family: var(--font-secondary);
   font-size: 15px;
+  font-weight: 300;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: rgba(255,255,255,0.65);
@@ -90,6 +92,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: 64px 0 40px;
 }
 .page-header h1 {
+  font-family: var(--font-primary);
   font-size: 56px;
   font-weight: 700;
   line-height: 1.1;
@@ -123,9 +126,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   margin-bottom: 32px;
 }
 .filter-btn {
-  font-family: var(--font-mono);
+  font-family: var(--font-secondary);
   font-size: 13px;
-  letter-spacing: 0.5px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
   padding: 6px 14px;
   border-radius: 100px;
   border: 1px solid var(--border);
@@ -145,16 +149,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* --- Meta --- */
 .meta {
-  font-family: var(--font-mono);
+  font-family: var(--font-secondary);
   font-size: 11px;
+  font-weight: 300;
   color: var(--text-muted);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 .meta-tag {
   display: inline-block;
-  font-family: var(--font-mono);
+  font-family: var(--font-secondary);
   font-size: 10px;
-  letter-spacing: 0.3px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
   padding: 2px 8px;
   border-radius: 100px;
   background: #D6E8E4;
@@ -169,10 +175,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   text-align: center;
 }
 .footer p {
-  font-family: var(--font-mono);
+  font-family: var(--font-secondary);
   font-size: 11px;
+  font-weight: 300;
   color: var(--text-muted);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 .footer a { color: var(--teal); }
 .footer a:hover { text-decoration: underline; }
