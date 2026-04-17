@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Env Des Lab — Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Fathom palette --- */
+        :root {
+            --deep: #1A1A1A;
+            --dark-teal: #0F3534;
+            --teal: #2E6E6E;
+            --accent: #0D9488;
+            --light-teal: #8AABAB;
+            --bg: #F5F5F2;
+            --card-bg: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #555555;
+            --text-muted: #8AABAB;
+            --border: #D4DDD8;
+        }
+
+        /* Nav */
+        .nav { background: var(--deep); }
+        .nav-logo { display: flex; align-items: center; }
+        .nav-logo img { height: 28px; width: auto; }
+        .nav-links a { color: rgba(255,255,255,0.65); }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+
+        /* Hero */
+        .hero {
+            background: var(--dark-teal);
+            color: #fff;
+            min-height: 50vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-inner {
+            width: calc(100% - 64px);
+            max-width: 1440px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 48px;
+        }
+        .hero-logo img {
+            height: 180px;
+            width: auto;
+        }
+        .hero-description {
+            font-size: 2rem;
+            line-height: 1.25;
+            color: var(--light-teal);
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Features */
+        .features { padding: 80px 0; }
+        .features-inner {
+            width: calc(100% - 64px);
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .feature-card {
+            background: var(--card-bg);
+            border-top: 3px solid var(--teal);
+            padding: 32px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-teal);
+            margin-bottom: 12px;
+        }
+        .feature-card p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .features-cta {
+            text-align: center;
+            margin-top: 32px;
+        }
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--teal);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .feature-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Activities carousel */
+        .activities-section {
+            background: #E8EEEC;
+            padding: 80px 0;
+        }
+        .activities-inner {
+            width: calc(100% - 64px);
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+        .section-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--dark-teal);
+        }
+        .section-link {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--teal);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .section-link:hover { color: var(--accent); }
+
+        .carousel-wrapper { position: relative; }
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+        .carousel-track::-webkit-scrollbar { display: none; }
+
+        .carousel-card {
+            flex: 0 0 calc((100% - 60px) / 4);
+            scroll-snap-align: start;
+            background: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .carousel-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .carousel-image {
+            width: 100%;
+            aspect-ratio: 3/2;
+            background: #C8D8D4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+        .carousel-body { padding: 18px 20px; }
+        .carousel-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark-teal);
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .carousel-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 12px;
+        }
+        .carousel-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .carousel-date {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #457272;
+            letter-spacing: 0.3px;
+        }
+        .carousel-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .carousel-badge {
+            display: inline-block;
+            background: var(--teal);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .carousel-nav {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .carousel-btn {
+            width: 36px; height: 36px;
+            border: 1px solid var(--light-teal);
+            border-radius: 50%;
+            background: var(--card-bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--teal);
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .carousel-btn:hover {
+            background: var(--dark-teal);
+            border-color: var(--dark-teal);
+            color: #fff;
+        }
+
+        /* Footer */
+        .footer { border-color: var(--border); }
+        .footer a { color: var(--teal); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero { min-height: 40vh; }
+            .hero-logo img { height: 120px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .carousel-card { flex: 0 0 280px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="img/logo-inline-neg.png" alt="Env Des Lab">
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="#">About</a>
+                <a href="team.html">Team</a>
+                <a href="activities.html">Activities</a>
+                <a href="publications.html">Publications</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-logo">
+                <img src="img/logo-stacked-neg.png" alt="Env Des Lab">
+            </div>
+            <p class="hero-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3 Feature blocks -->
+    <section class="features">
+        <div class="features-inner">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Perceptio</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Habitaculum</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Confluxus</h3>
+                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                </div>
+            </div>
+            <div class="features-cta">
+                <a href="#" class="feature-link">Scopri di pi&ugrave; &#x2192;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities carousel — reverse chronological -->
+    <section class="activities-section">
+        <div class="activities-inner">
+            <div class="section-header">
+                <h2 class="section-title">Latest activities</h2>
+                <a href="activities.html" class="section-link">All Activities &#x2192;</a>
+            </div>
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carouselTrack">
+
+                    <a href="#" class="carousel-card">
+                        <div class="carousel-image">PHOTO</div>
+                        <div class="carousel-body">
+                            <div class="carousel-title">Refectio Saltus Desolati</div>
+                            <div class="carousel-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <strong>Duis aute irure dolor</strong> in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, <em>totam rem aperiam</em>.</div>
+                            <div class="carousel-meta">
+                                <span class="carousel-date">19 Apr 2026</span>
+                                <div class="carousel-badges"><span class="carousel-badge">Research</span></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="carousel-card">
+                        <div class="carousel-image">PHOTO</div>
+                        <div class="carousel-body">
+                            <div class="carousel-title">Colloquia de Haustibus Agri</div>
+                            <div class="carousel-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. <strong>Nemo enim ipsam voluptatem</strong> quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, <em>consectetur, adipisci velit</em>.</div>
+                            <div class="carousel-meta">
+                                <span class="carousel-date">3 Mar 2026</span>
+                                <div class="carousel-badges"><span class="carousel-badge">Conferences</span><span class="carousel-badge">Seminars</span></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="carousel-card">
+                        <div class="carousel-image">PHOTO</div>
+                        <div class="carousel-body">
+                            <div class="carousel-title">Suffimen Brumale Compitorum</div>
+                            <div class="carousel-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. <strong>Similique sunt in culpa</strong> qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, <em>omnis voluptas assumenda est</em>.</div>
+                            <div class="carousel-meta">
+                                <span class="carousel-date">28 Feb 2026</span>
+                                <div class="carousel-badges"><span class="carousel-badge">Workshops</span><span class="carousel-badge">Outreach</span><span class="carousel-badge">Fieldwork</span></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="carousel-card">
+                        <div class="carousel-image">PHOTO</div>
+                        <div class="carousel-body">
+                            <div class="carousel-title">Ostentum &ldquo;Clangor Vacui&rdquo;</div>
+                            <div class="carousel-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam <strong>nihil molestiae consequatur</strong>, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a <em>sapiente delectus</em>, ut aut reiciendis voluptatibus maiores.</div>
+                            <div class="carousel-meta">
+                                <span class="carousel-date">9 Jan 2026</span>
+                                <div class="carousel-badges"><span class="carousel-badge">Exhibitions</span></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="carousel-card">
+                        <div class="carousel-image">PHOTO</div>
+                        <div class="carousel-body">
+                            <div class="carousel-title">Fabrica Fulgoris et Umbrae</div>
+                            <div class="carousel-text">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. <strong>Sed quia non numquam</strong> eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, <em>nisi ut aliquid ex ea commodi consequatur</em>.</div>
+                            <div class="carousel-meta">
+                                <span class="carousel-date">11 Dec 2025</span>
+                                <div class="carousel-badges"><span class="carousel-badge">Research</span><span class="carousel-badge">Partnerships</span></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="carousel-card">
+                        <div class="carousel-image">PHOTO</div>
+                        <div class="carousel-body">
+                            <div class="carousel-title">Crepundia Loci et Aura Vocalis</div>
+                            <div class="carousel-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse <strong>cillum dolore eu fugiat</strong> nulla pariatur. Excepteur sint occaecat cupidatat non proident, <em>sunt in culpa qui officia</em> deserunt mollit anim id est laborum.</div>
+                            <div class="carousel-meta">
+                                <span class="carousel-date">12 Nov 2025</span>
+                                <div class="carousel-badges"><span class="carousel-badge">Fieldwork</span></div>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-btn" id="prevBtn">&#x2190;</button>
+                    <button class="carousel-btn" id="nextBtn">&#x2192;</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Env Des Lab &middot; <a href="mailto:envdes.lab@polimi.it">envdes.lab@polimi.it</a></p>
+    </footer>
+
+    <script>
+        var track = document.getElementById('carouselTrack');
+        function getScrollAmount() {
+            var card = track.querySelector('.carousel-card');
+            return card ? card.offsetWidth + 20 : 300;
+        }
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+        });
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

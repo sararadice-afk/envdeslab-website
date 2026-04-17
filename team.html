@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team — Env Des lab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep: #1A1A1A;
+            --dark-teal: #0F3534;
+            --teal: #2E6E6E;
+            --accent: #0D9488;
+            --light-teal: #8AABAB;
+        }
+        .nav { background: var(--deep); }
+        .nav-logo { display: flex; align-items: center; }
+        .nav-logo img { height: 28px; width: auto; }
+        .nav-links a { color: rgba(255,255,255,0.65); }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+
+        .page-header { padding: 60px 0 40px; }
+        .page-header h1 {
+            font-size: 56px; font-weight: 700;
+            color: var(--dark-teal); margin-bottom: 12px;
+        }
+        .page-header p {
+            font-size: 18px; color: #555;
+            max-width: 600px; line-height: 1.6;
+        }
+
+        /* Team grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 64px;
+        }
+
+        .team-card {
+            background: #fff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s, transform 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .team-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .team-photo {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #D6E8E4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #457272;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 1px;
+            overflow: hidden;
+        }
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            mix-blend-mode: multiply;
+        }
+        .team-photo::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, rgba(46,110,110,0.35) 0%, rgba(15,53,52,0.2) 100%);
+            mix-blend-mode: color;
+            pointer-events: none;
+        }
+
+        .team-info {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .team-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark-teal);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+        .team-name:hover { color: var(--accent); }
+        .team-name .toggle-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            border: 2px solid var(--teal);
+            border-radius: 50%;
+            color: var(--teal);
+            transition: transform 0.3s ease, background 0.2s, color 0.2s;
+        }
+        .team-name .toggle-icon svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .team-card:hover .toggle-icon {
+            background: var(--teal);
+            color: #fff;
+        }
+        .team-name.open .toggle-icon {
+            transform: rotate(45deg);
+            background: var(--dark-teal);
+            border-color: var(--dark-teal);
+            color: #fff;
+        }
+
+        .team-role {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: #457272;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        /* Research interest tags */
+        .team-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .team-tag {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.3px;
+            padding: 3px 10px;
+            border-radius: 100px;
+            background: #D6E8E4;
+            color: var(--dark-teal);
+        }
+
+        /* Accordion bio — toggle is now on .team-name */
+
+        .team-bio {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.7;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.35s ease, opacity 0.25s ease;
+            opacity: 0;
+            margin-bottom: 0;
+        }
+        .team-bio.open {
+            max-height: 600px;
+            opacity: 1;
+            margin-bottom: 18px;
+        }
+
+        .team-bio .bio-polimi-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--teal);
+            text-decoration: none;
+            margin-top: 10px;
+            transition: color 0.15s;
+        }
+        .team-bio .bio-polimi-link:hover {
+            color: var(--dark-teal);
+            text-decoration: underline;
+        }
+
+        .team-links {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: auto;
+            padding-top: 16px;
+        }
+
+        .team-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--teal);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .team-link:hover {
+            color: var(--dark-teal);
+            text-decoration: underline;
+        }
+        .team-link-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+        .team-link-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .bio-polimi-link .ext-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+        .bio-polimi-link .ext-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .footer { border-color: #D4DDD8; }
+        .footer a { color: var(--teal); }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="img/logo-inline-neg.png" alt="Env Des Lab">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#">About</a>
+                <a href="team.html" class="active">Team</a>
+                <a href="activities.html">Activities</a>
+                <a href="publications.html">Publications</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Team</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+
+        <div class="team-grid">
+
+            <!-- 1 — Director — 4 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Marcus Aurelius Primus <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">Director</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 1</span>
+                        <span class="team-tag">Tema ricerca 3</span>
+                        <span class="team-tag">Tema ricerca 5</span>
+                        <span class="team-tag">Tema ricerca 8</span>
+                    </div>
+                    <div class="team-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> marcus.primus@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2 — Senior Researcher — 4 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Livia Secunda <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">Senior Researcher</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 2</span>
+                        <span class="team-tag">Tema ricerca 4</span>
+                        <span class="team-tag">Tema ricerca 7</span>
+                        <span class="team-tag">Tema ricerca 10</span>
+                    </div>
+                    <div class="team-bio">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> livia.secunda@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 — Post-doc — 3 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Gaius Tertius <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">Post-doc Researcher</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 1</span>
+                        <span class="team-tag">Tema ricerca 6</span>
+                        <span class="team-tag">Tema ricerca 9</span>
+                    </div>
+                    <div class="team-bio">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> gaius.tertius@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 — PhD Candidate — 3 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Claudia Quarta <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">PhD Candidate</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 2</span>
+                        <span class="team-tag">Tema ricerca 5</span>
+                        <span class="team-tag">Tema ricerca 8</span>
+                    </div>
+                    <div class="team-bio">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> claudia.quarta@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 — PhD Candidate — 2 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Titus Quintus <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">PhD Candidate</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 3</span>
+                        <span class="team-tag">Tema ricerca 7</span>
+                    </div>
+                    <div class="team-bio">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> titus.quintus@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 — Research Assistant — 2 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Iulia Sexta <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">Research Assistant</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 4</span>
+                        <span class="team-tag">Tema ricerca 6</span>
+                    </div>
+                    <div class="team-bio">Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> iulia.sexta@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7 — Research Fellow — 3 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Decimus Septimus <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">Research Fellow</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 1</span>
+                        <span class="team-tag">Tema ricerca 5</span>
+                        <span class="team-tag">Tema ricerca 10</span>
+                    </div>
+                    <div class="team-bio">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> decimus.septimus@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8 — Visiting Researcher — 2 tags -->
+            <div class="team-card">
+                <div class="team-photo">PHOTO</div>
+                <div class="team-info">
+                    <div class="team-name" data-bio-toggle>Cornelia Octavia <span class="toggle-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+                    <div class="team-role">Visiting Researcher</div>
+                    <div class="team-tags">
+                        <span class="team-tag">Tema ricerca 2</span>
+                        <span class="team-tag">Tema ricerca 9</span>
+                    </div>
+                    <div class="team-bio">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur.<br><a href="#" class="bio-polimi-link"><span class="ext-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></span> Pagina istituzionale PoliMi</a></div>
+                    <div class="team-links">
+                        <a href="#" class="team-link"><span class="team-link-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 4 12 13 22 4"/></svg></span> cornelia.octavia@polimi.it</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Env Des lab &middot; <a href="mailto:envdes.lab@polimi.it">envdes.lab@polimi.it</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.team-card').forEach(function(card) {
+            card.addEventListener('click', function(e) {
+                // Don't toggle if clicking a link
+                if (e.target.closest('a')) return;
+                var name = this.querySelector('.team-name');
+                var bio = this.querySelector('.team-bio');
+                var isOpen = name.classList.contains('open');
+                if (isOpen) {
+                    name.classList.remove('open');
+                    bio.classList.remove('open');
+                } else {
+                    name.classList.add('open');
+                    bio.classList.add('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

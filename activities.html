@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities — Env Des Lab</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep: #1A1A1A;
+            --dark-teal: #0F3534;
+            --teal: #2E6E6E;
+            --accent: #0D9488;
+            --light-teal: #8AABAB;
+        }
+        .nav { background: var(--deep); }
+        .nav-logo { display: flex; align-items: center; }
+        .nav-logo img { height: 28px; width: auto; }
+        .nav-links a { color: rgba(255,255,255,0.65); }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+
+        .page-header { padding: 60px 0 40px; }
+        .page-header h1 {
+            font-size: 56px; font-weight: 700;
+            color: var(--dark-teal); margin-bottom: 12px;
+        }
+        .page-header p {
+            font-size: 18px; color: #555;
+            max-width: 600px; line-height: 1.6;
+        }
+
+        .filter-btn {
+            border: 1px solid #c8d8d4; color: #555; background: #fff;
+        }
+        .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+        .filter-btn.active { background: var(--dark-teal); color: #fff; border-color: var(--dark-teal); }
+
+        .posts-list {
+            display: flex; flex-direction: column;
+            gap: 16px; margin-bottom: 64px;
+        }
+
+        .post-card {
+            display: flex; gap: 24px;
+            background: #fff; padding: 24px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            transition: box-shadow 0.2s, transform 0.2s;
+            text-decoration: none; color: inherit;
+        }
+        .post-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .post-card.hidden { display: none; }
+
+        .post-image {
+            width: 350px; height: auto;
+            aspect-ratio: 3/2;
+            background: #C8D8D4; border-radius: 4px;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+
+        .post-content {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .post-title {
+            font-size: 22px; font-weight: 600;
+            color: var(--dark-teal); margin-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .post-title::after {
+            content: '\2197'; font-size: 15px; opacity: 0.4;
+        }
+
+        .post-text {
+            font-size: 16px; color: #555;
+            line-height: 1.65; margin-bottom: 14px;
+        }
+
+        .post-meta-row {
+            display: flex; align-items: center;
+            gap: 10px; flex-wrap: wrap;
+        }
+
+        .meta { color: #457272; font-size: 12px; }
+
+        .category-badge {
+            display: inline-block;
+            background: var(--teal); color: #fff;
+            padding: 3px 10px; border-radius: 100px;
+            font-family: var(--font-mono); font-size: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .footer { border-color: var(--border); }
+        .footer a { color: var(--teal); }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="img/logo-inline-neg.png" alt="Env Des Lab">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#">About</a>
+                <a href="team.html">Team</a>
+                <a href="activities.html" class="active">Activities</a>
+                <a href="publications.html">Publications</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Activities</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="research">Research</button>
+            <button class="filter-btn" data-filter="workshops">Workshops</button>
+            <button class="filter-btn" data-filter="conferences">Conferences</button>
+            <button class="filter-btn" data-filter="exhibitions">Exhibitions</button>
+            <button class="filter-btn" data-filter="fieldwork">Fieldwork</button>
+            <button class="filter-btn" data-filter="lectures">Lectures</button>
+            <button class="filter-btn" data-filter="awards">Awards</button>
+            <button class="filter-btn" data-filter="partnerships">Partnerships</button>
+            <button class="filter-btn" data-filter="seminars">Seminars</button>
+            <button class="filter-btn" data-filter="outreach">Outreach</button>
+            <button class="filter-btn" data-filter="projects">Projects</button>
+        </div>
+
+        <!-- Posts in reverse chronological order -->
+        <div class="posts-list">
+
+            <!-- 1 cat -->
+            <a href="#" class="post-card" data-category="research">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Refectio Saltus Desolati</div>
+                        <div class="post-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <strong>Duis aute irure dolor</strong> in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, <em>totam rem aperiam</em>.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">19 Apr 2026</span>
+                        <span class="category-badge">Research</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 2 cat -->
+            <a href="#" class="post-card" data-category="conferences seminars">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Colloquia de Haustibus Agri</div>
+                        <div class="post-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. <strong>Nemo enim ipsam voluptatem</strong> quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, <em>consectetur, adipisci velit</em>.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">3 Mar 2026</span>
+                        <span class="category-badge">Conferences</span>
+                        <span class="category-badge">Seminars</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 3 cat -->
+            <a href="#" class="post-card" data-category="workshops outreach fieldwork">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Suffimen Brumale Compitorum</div>
+                        <div class="post-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. <strong>Similique sunt in culpa</strong> qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, <em>omnis voluptas assumenda est</em>.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">28 Feb 2026</span>
+                        <span class="category-badge">Workshops</span>
+                        <span class="category-badge">Outreach</span>
+                        <span class="category-badge">Fieldwork</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 1 cat -->
+            <a href="#" class="post-card" data-category="exhibitions">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Ostentum &ldquo;Clangor Vacui&rdquo;</div>
+                        <div class="post-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam <strong>nihil molestiae consequatur</strong>, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a <em>sapiente delectus</em>, ut aut reiciendis voluptatibus maiores.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">9 Jan 2026</span>
+                        <span class="category-badge">Exhibitions</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 2 cat -->
+            <a href="#" class="post-card" data-category="research partnerships">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Fabrica Fulgoris et Umbrae</div>
+                        <div class="post-text">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. <strong>Sed quia non numquam</strong> eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, <em>nisi ut aliquid ex ea commodi consequatur</em>.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">11 Dec 2025</span>
+                        <span class="category-badge">Research</span>
+                        <span class="category-badge">Partnerships</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 1 cat -->
+            <a href="#" class="post-card" data-category="fieldwork">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Crepundia Loci et Aura Vocalis</div>
+                        <div class="post-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse <strong>cillum dolore eu fugiat</strong> nulla pariatur. Excepteur sint occaecat cupidatat non proident, <em>sunt in culpa qui officia</em> deserunt mollit anim id est laborum.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">12 Nov 2025</span>
+                        <span class="category-badge">Fieldwork</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 3 cat -->
+            <a href="#" class="post-card" data-category="lectures awards seminars">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Praelectio de Motu Aeris</div>
+                        <div class="post-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto <strong>beatae vitae dicta sunt explicabo</strong>. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti, <em>quos dolores et quas molestias</em> excepturi sint occaecati cupiditate non provident.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">5 Oct 2025</span>
+                        <span class="category-badge">Lectures</span>
+                        <span class="category-badge">Awards</span>
+                        <span class="category-badge">Seminars</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 1 cat -->
+            <a href="#" class="post-card" data-category="lectures">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Scrutamen Caeli Anguli in Foro Vetusto</div>
+                        <div class="post-text">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. <strong>Temporibus autem quibusdam</strong> et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus <em>asperiores repellat</em>.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">22 Aug 2025</span>
+                        <span class="category-badge">Lectures</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 2 cat -->
+            <a href="#" class="post-card" data-category="outreach conferences">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Forum Civitatis Viridis</div>
+                        <div class="post-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint. <strong>Occaecati cupiditate non provident</strong>, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, <em>cumque nihil impedit</em> quo minus id quod maxime placeat facere possimus.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">20 Jul 2025</span>
+                        <span class="category-badge">Outreach</span>
+                        <span class="category-badge">Conferences</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 3 cat -->
+            <a href="#" class="post-card" data-category="partnerships workshops research">
+                <div class="post-image"></div>
+                <div class="post-content">
+                    <div>
+                        <div class="post-title">Instauratio Praedii Desueti</div>
+                        <div class="post-text">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. <strong>Ut enim ad minima veniam</strong>, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat <em>nulla pariatur</em>.</div>
+                    </div>
+                    <div class="post-meta-row">
+                        <span class="meta">15 May 2025</span>
+                        <span class="category-badge">Partnerships</span>
+                        <span class="category-badge">Workshops</span>
+                        <span class="category-badge">Research</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Env Des Lab &middot; <a href="mailto:envdes.lab@polimi.it">envdes.lab@polimi.it</a></p>
+    </footer>
+
+    <script>
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const postCards = document.querySelectorAll('.post-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const filterValue = this.dataset.filter;
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                postCards.forEach(card => {
+                    var categories = card.dataset.category.split(' ');
+                    if (filterValue === 'all' || categories.indexOf(filterValue) !== -1) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

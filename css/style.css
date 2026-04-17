@@ -1,0 +1,181 @@
+/* ========================================================
+   Env Des Lab — Global Styles
+   Palette: Fathom
+   #1A1A1A · #0F3534 · #2E6E6E · #0D9488 · #8AABAB
+   Fonts:  Helvetica / Arial (primary)
+           Space Mono (data/captions)
+           JetBrains Mono (logo "lab" only)
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* --- Tokens --- */
+:root {
+  --deep: #1A1A1A;
+  --dark-teal: #0F3534;
+  --teal: #2E6E6E;
+  --accent: #0D9488;
+  --light-teal: #8AABAB;
+  --bg: #F5F5F2;
+  --card-bg: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #555555;
+  --text-muted: #457272;
+  --border: #D4DDD8;
+
+  --font-primary: Helvetica, Arial, system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-logo-lab: 'JetBrains Mono', monospace;
+
+  --max-w: 1440px;
+  --gutter: 32px;
+  --radius: 6px;
+}
+
+/* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-primary);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* --- Layout --- */
+.container { width: calc(100% - 2 * var(--gutter)); max-width: var(--max-w); margin: 0 auto; }
+
+/* --- Navigation --- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--deep);
+  padding: 0 var(--gutter);
+}
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
+.nav-logo img {
+  height: 28px;
+  width: auto;
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  transition: color 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: #fff; }
+
+/* --- Page Header --- */
+.page-header {
+  padding: 64px 0 40px;
+}
+.page-header h1 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--dark-teal);
+}
+.page-header p {
+  margin-top: 12px;
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 560px;
+}
+
+/* --- Cards --- */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+/* --- Tags / Filters --- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  background: var(--card-bg);
+  transition: all 0.15s;
+}
+.filter-btn:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.filter-btn.active {
+  background: var(--dark-teal);
+  color: #fff;
+  border-color: var(--dark-teal);
+}
+
+/* --- Meta --- */
+.meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.meta-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: #D6E8E4;
+  color: var(--dark-teal);
+}
+
+/* --- Footer --- */
+.footer {
+  margin-top: 80px;
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.footer p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.footer a { color: var(--teal); }
+.footer a:hover { text-decoration: underline; }
+
+/* --- Utilities --- */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
